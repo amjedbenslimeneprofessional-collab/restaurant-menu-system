@@ -1,7 +1,7 @@
 [
   {
     "id": "food-001",
-    "picture": "./images/omelette.jpg",
+    "picture": "/images/omelette.jpg",
     "name": "Cheese Omelette",
     "price": 3.5,
     "cookingTime": 6,
@@ -15,7 +15,7 @@
   },
   {
     "id": "food-002",
-    "picture": "./images/french_toast.jpg",
+    "picture": "/images/french_toast.jpg",
     "name": "French Toast",
     "price": 4.2,
     "cookingTime": 8,
@@ -29,7 +29,7 @@
   },
   {
     "id": "food-003",
-    "picture": "./images/club_sandwich.jpg",
+    "picture": "/images/club_sandwich.jpg",
     "name": "Club Sandwich",
     "price": 6.8,
     "cookingTime": 10,
@@ -43,7 +43,7 @@
   },
   {
     "id": "food-004",
-    "picture": "./images/grilled_steak.jpg",
+    "picture": "/images/grilled_steak.jpg",
     "name": "Grilled Steak",
     "price": 14.5,
     "cookingTime": 20,
@@ -57,7 +57,7 @@
   },
   {
     "id": "food-005",
-    "picture": "./images/pasta_bolognese.jpg",
+    "picture": "/images/pasta_bolognese.jpg",
     "name": "Pasta Bolognese",
     "price": 9.2,
     "cookingTime": 18,
@@ -71,7 +71,7 @@
   },
   {
     "id": "food-006",
-    "picture": "./images/fries.jpg",
+    "picture": "/images/fries.jpg",
     "name": "French Fries",
     "price": 2.5,
     "cookingTime": 5,
@@ -85,7 +85,7 @@
   },
   {
     "id": "food-007",
-    "picture": "./images/chicken_nuggets.jpg",
+    "picture": "/images/chicken_nuggets.jpg",
     "name": "Chicken Nuggets",
     "price": 4.0,
     "cookingTime": 7,
@@ -99,7 +99,7 @@
   },
   {
     "id": "food-008",
-    "picture": "./images/cheesecake.jpg",
+    "picture": "/images/cheesecake.jpg",
     "name": "Cheesecake",
     "price": 4.5,
     "cookingTime": 0,
@@ -113,7 +113,7 @@
   },
   {
     "id": "food-009",
-    "picture": "./images/ice_cream.jpg",
+    "picture": "/images/ice_cream.jpg",
     "name": "Vanilla Ice Cream",
     "price": 2.8,
     "cookingTime": 0,
@@ -127,7 +127,7 @@
   },
   {
     "id": "food-010",
-    "picture": "./images/milkshake.jpg",
+    "picture": "/images/milkshake.jpg",
     "name": "Chocolate Milkshake",
     "price": 3.2,
     "cookingTime": 3,
@@ -141,7 +141,7 @@
   },
   {
     "id": "food-011",
-    "picture": "./images/smoothie.jpg",
+    "picture": "/images/smoothie.jpg",
     "name": "Fruit Smoothie",
     "price": 3.0,
     "cookingTime": 3,
@@ -155,7 +155,7 @@
   },
   {
     "id": "food-012",
-    "picture": "./images/chicken_soup.jpg",
+    "picture": "/images/chicken_soup.jpg",
     "name": "Chicken Soup",
     "price": 5.0,
     "cookingTime": 12,
@@ -169,7 +169,7 @@
   },
   {
     "id": "food-013",
-    "picture": "./images/margherita_pizza.jpg",
+    "picture": "/images/margherita_pizza.jpg",
     "name": "Margherita Pizza",
     "price": 8.99,
     "cookingTime": 15,
@@ -183,7 +183,7 @@
   },
   {
     "id": "food-014",
-    "picture": "./images/chicken_burger.jpg",
+    "picture": "/images/chicken_burger.jpg",
     "name": "Chicken Burger",
     "price": 6.5,
     "cookingTime": 10,
@@ -197,7 +197,7 @@
   },
   {
     "id": "food-015",
-    "picture": "./images/pancakes.jpg",
+    "picture": "/images/pancakes.jpg",
     "name": "Honey Pancakes",
     "price": 4.99,
     "cookingTime": 8,
@@ -211,7 +211,7 @@
   },
   {
     "id": "food-016",
-    "picture": "./images/vegan_salad.jpg",
+    "picture": "/images/vegan_salad.jpg",
     "name": "Vegan Salad",
     "price": 5.99,
     "cookingTime": 5,
@@ -225,7 +225,7 @@
   },
   {
     "id": "food-017",
-    "picture": "./images/chocolate_cake.jpg",
+    "picture": "/images/chocolate_cake.jpg",
     "name": "Chocolate Cake",
     "price": 3.75,
     "cookingTime": 0,
@@ -239,7 +239,7 @@
   },
   {
     "id": "food-018",
-    "picture": "./images/iced_coffee.jpg",
+    "picture": "/images/iced_coffee.jpg",
     "name": "Iced Coffee",
     "price": 2.99,
     "cookingTime": 3,
