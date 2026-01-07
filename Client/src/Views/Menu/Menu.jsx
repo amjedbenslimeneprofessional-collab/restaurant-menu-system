@@ -19,20 +19,43 @@ export default function Menu() {
     "drink",
   ];
 
-  const [activeCategory, setActiveCategory] = useState("all");
+  // empty array means "all" (no category filter)
+  const [activeCategories, setActiveCategories] = useState([]);
+  const [sortBy, setSortBy] = useState("none");
 
   const filteredItems = data.filter((item) => {
     const matchesCategory =
-      activeCategory === "all" || item.types.includes(activeCategory);
+      activeCategories.length === 0 ||
+      (item.types && item.types.some((t) => activeCategories.includes(t)));
 
     const searchLower = search.trim().toLowerCase();
     const matchesSearch =
       !searchLower ||
       item.name.toLowerCase().includes(searchLower) ||
       (item.description && item.description.toLowerCase().includes(searchLower)) ||
-      item.types.join(" ").toLowerCase().includes(searchLower);
+      (item.types && item.types.join(" ").toLowerCase().includes(searchLower));
 
     return matchesCategory && matchesSearch;
+  });
+
+  const parsePrice = (p) => {
+    const n = parseFloat(String(p).replace(/[^0-9.\-]+/g, ""));
+    return Number.isNaN(n) ? 0 : n;
+  };
+
+  const sortedItems = [...filteredItems].sort((a, b) => {
+    switch (sortBy) {
+      case "price-asc":
+        return parsePrice(a.price) - parsePrice(b.price);
+      case "price-desc":
+        return parsePrice(b.price) - parsePrice(a.price);
+      case "popularity-asc":
+        return (a.rating || 0) - (b.rating || 0);
+      case "popularity-desc":
+        return (b.rating || 0) - (a.rating || 0);
+      default:
+        return 0;
+    }
   });
 
   return (
@@ -41,14 +64,29 @@ export default function Menu() {
       <h1 className="text-4xl font-bold text-center mb-6">Menu</h1>
 
       {/* Search Bar */}
-      <div className="max-w-md mx-auto mb-6">
+      <div className="max-w-md mx-auto mb-6 flex items-center gap-3">
         <input
           type="text"
           placeholder="Search menu..."
           value={search}
-          onChange={(e) => {if(activeCategory !== "all") setActiveCategory("all");setSearch(e.target.value);}}
-          className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
+          onChange={(e) => {
+            if (activeCategories.length) setActiveCategories([]);
+            setSearch(e.target.value);
+          }}
+          className="flex-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
+
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="px-3 py-2 border rounded-md bg-white"
+        >
+          <option value="none">Sort: None</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="popularity-asc">Popularity: Low → High</option>
+          <option value="popularity-desc">Popularity: High → Low</option>
+        </select>
       </div>
 
       {/* Category Nav */}
@@ -56,10 +94,16 @@ export default function Menu() {
         {categories.map((category) => (
           <button
             key={category}
-            onClick={() => setActiveCategory(category)}
+            onClick={() => {
+              setActiveCategories((prev) => {
+                if (category === "all") return [];
+                if (prev.includes(category)) return prev.filter((c) => c !== category);
+                return [...prev, category];
+              });
+            }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition
                 ${
-                  activeCategory === category
+                  (category === "all" ? activeCategories.length === 0 : activeCategories.includes(category))
                     ? "bg-gray-900 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }
@@ -74,7 +118,7 @@ export default function Menu() {
         <p className="text-center text-gray-500 text-lg">No menu found.</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filteredItems.map((item) => (
+          {sortedItems.map((item) => (
             <Link
               key={item.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
