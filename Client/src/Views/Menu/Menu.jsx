@@ -47,6 +47,10 @@ export default function Menu() {
         return (a.rating || 0) - (b.rating || 0);
       case "popularity-desc":
         return (b.rating || 0) - (a.rating || 0);
+      case "calories-asc":
+        return (a.calories || 0) - (b.calories || 0);
+      case "calories-desc":
+        return (b.calories || 0) - (a.calories || 0);
       default:
         return 0;
     }
@@ -80,6 +84,8 @@ export default function Menu() {
           <option value="price-asc">Price: Low → High</option>
           <option value="popularity-desc">Popularity: High → Low</option>
           <option value="popularity-asc">Popularity: Low → High</option>
+          <option value="calories-desc">Calories: High → Low</option>
+          <option value="calories-asc">Calories: Low → High</option>
         </select>
       </div>
 
@@ -128,7 +134,7 @@ export default function Menu() {
               to={`/menu/${item.id}`}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
             >
-              <div className="aspect-[4/3] w-full">
+              <div className="aspect-4/3 w-full">
                 <img
                   src={item.picture}
                   alt={item.name}
