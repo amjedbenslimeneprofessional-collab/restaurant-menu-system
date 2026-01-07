@@ -82,10 +82,10 @@ export default function Menu() {
           className="px-3 py-2 border rounded-md bg-white"
         >
           <option value="none">Sort: None</option>
-          <option value="price-asc">Price: Low → High</option>
           <option value="price-desc">Price: High → Low</option>
-          <option value="popularity-asc">Popularity: Low → High</option>
+          <option value="price-asc">Price: Low → High</option>
           <option value="popularity-desc">Popularity: High → Low</option>
+          <option value="popularity-asc">Popularity: Low → High</option>
         </select>
       </div>
 
