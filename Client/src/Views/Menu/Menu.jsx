@@ -28,7 +28,6 @@ export default function Menu() {
     const matchesSearch =
       !searchLower ||
       item.name.toLowerCase().includes(searchLower) ||
-      item.description?.toLowerCase().includes(searchLower) ||
       item.types?.join(" ").toLowerCase().includes(searchLower);
 
     return matchesCategory && matchesSearch;
