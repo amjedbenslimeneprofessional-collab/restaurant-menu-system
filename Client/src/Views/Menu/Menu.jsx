@@ -1,11 +1,11 @@
 import data from "../../data/data.json";
-
 import { Link } from "react-router";
-
 import { useState } from "react";
 
 export default function Menu() {
   const [search, setSearch] = useState("");
+  const [activeCategories, setActiveCategories] = useState([]);
+  const [sortBy, setSortBy] = useState("none");
 
   const categories = [
     "all",
@@ -19,10 +19,6 @@ export default function Menu() {
     "drink",
   ];
 
-  // empty array means "all" (no category filter)
-  const [activeCategories, setActiveCategories] = useState([]);
-  const [sortBy, setSortBy] = useState("none");
-
   const filteredItems = data.filter((item) => {
     const matchesCategory =
       activeCategories.length === 0 ||
@@ -32,16 +28,14 @@ export default function Menu() {
     const matchesSearch =
       !searchLower ||
       item.name.toLowerCase().includes(searchLower) ||
-      (item.description && item.description.toLowerCase().includes(searchLower)) ||
-      (item.types && item.types.join(" ").toLowerCase().includes(searchLower));
+      item.description?.toLowerCase().includes(searchLower) ||
+      item.types?.join(" ").toLowerCase().includes(searchLower);
 
     return matchesCategory && matchesSearch;
   });
 
-  const parsePrice = (p) => {
-    const n = parseFloat(String(p).replace(/[^0-9.\-]+/g, ""));
-    return Number.isNaN(n) ? 0 : n;
-  };
+  const parsePrice = (p) =>
+    parseFloat(String(p).replace(/[^0-9.\-]+/g, "")) || 0;
 
   const sortedItems = [...filteredItems].sort((a, b) => {
     switch (sortBy) {
@@ -59,12 +53,12 @@ export default function Menu() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       {/* Title */}
-      <h1 className="text-4xl font-bold text-center mb-6">Menu</h1>
+      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-6">Menu</h1>
 
-      {/* Search Bar */}
-      <div className="max-w-md mx-auto mb-6 flex items-center gap-3">
+      {/* Search + Sort */}
+      <div className="mb-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-center">
         <input
           type="text"
           placeholder="Search menu..."
@@ -73,13 +67,13 @@ export default function Menu() {
             if (activeCategories.length) setActiveCategories([]);
             setSearch(e.target.value);
           }}
-          className="flex-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
+          className="w-full sm:max-w-md px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
 
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="px-3 py-2 border rounded-md bg-white"
+          className="w-full sm:w-auto px-3 py-2 border rounded-md bg-white"
         >
           <option value="none">Sort: None</option>
           <option value="price-desc">Price: High → Low</option>
@@ -89,53 +83,65 @@ export default function Menu() {
         </select>
       </div>
 
-      {/* Category Nav */}
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => {
-              setActiveCategories((prev) => {
-                if (category === "all") return [];
-                if (prev.includes(category)) return prev.filter((c) => c !== category);
-                return [...prev, category];
-              });
-            }}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition
-                ${
-                  (category === "all" ? activeCategories.length === 0 : activeCategories.includes(category))
-                    ? "bg-gray-900 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+      {/* Categories */}
+      <div className="mb-8 overflow-x-auto">
+        <div className="flex gap-3 w-max mx-auto px-1">
+          {categories.map((category) => {
+            const isActive =
+              category === "all"
+                ? activeCategories.length === 0
+                : activeCategories.includes(category);
+
+            return (
+              <button
+                key={category}
+                onClick={() =>
+                  setActiveCategories((prev) => {
+                    if (category === "all") return [];
+                    return prev.includes(category)
+                      ? prev.filter((c) => c !== category)
+                      : [...prev, category];
+                  })
                 }
-                `}
-          >
-            {category}
-          </button>
-        ))}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition
+                  ${
+                    isActive
+                      ? "bg-gray-900 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+              >
+                {category}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {!filteredItems?.length ? (
+      {/* Menu Grid */}
+      {!sortedItems.length ? (
         <p className="text-center text-gray-500 text-lg">No menu found.</p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {sortedItems.map((item) => (
             <Link
               key={item.id}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
               to={`/menu/${item.id}`}
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
             >
-              <img
-                src={item.picture}
-                alt={item.name}
-                className="h-48 w-full object-cover"
-              />
+              <div className="aspect-[4/3] w-full">
+                <img
+                  src={item.picture}
+                  alt={item.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
               <div className="p-4 space-y-2">
-                <h2 className="text-lg font-semibold text-gray-800">
+                <h2 className="text-base sm:text-lg font-semibold text-gray-800">
                   {item.name}
                 </h2>
 
-                <p className="text-gray-600 font-medium">${item.price}</p>
+                <p className="text-gray-700 font-medium">${item.price}</p>
 
                 <div className="flex items-center justify-between text-sm text-gray-500">
                   <span>⭐ {item.rating}</span>
